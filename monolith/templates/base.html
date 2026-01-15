@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+  <head>
+    <title>
+      {% block title %}
+        Book Store
+      {% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    {% block head %}
+
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header">
+          <div class="logo">
+            <h1><a href="/">Book Store</a></h1>
+          </div>
+          <nav>
+            {% if request.session.customer_id %}
+              <a href="/books/">Books</a>
+              <a href="/carts/">
+                Cart{% if cart_item_count > 0 %}
+                  ({{ cart_item_count }})
+                {% endif %}
+              </a>
+              <a href="/customer/logout/">Logout</a>
+            {% else %}
+              <a href="/customer/register/">Đăng ký</a>
+              <a href="/customer/login/">Đăng nhập</a>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      {% block content %}
+
+      {% endblock %}
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>© 2026 Book Store</p>
+      </div>
+    </footer>
+  </body>
+</html>

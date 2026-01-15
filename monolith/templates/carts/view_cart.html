@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+<section class="cart-section">
+    <div class="container">
+        <h2>Giỏ hàng của bạn</h2>
+
+        {% if cart_items %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên sách</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.book.title }}</td>
+                    <td>{{ item.book.price }} đ</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.total_price }} đ
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-actions">
+            <a href="/books/" class="btn-back">← Tiếp tục mua sách</a>
+        </div>
+
+        {% else %}
+        <p class="empty-cart">Giỏ hàng của bạn đang trống.</p>
+        <a href="/books/" class="btn-back">← Quay lại mua sách</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
