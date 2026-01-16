@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+Trang chủ
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h2>Trang chủ</h2>
+        {% if request.session.customer_name %}
+            <h3>Welcome, {{ request.session.customer_name }}!</h3>
+        {% else %}
+            <h3>Welcome, Guest!</h3>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

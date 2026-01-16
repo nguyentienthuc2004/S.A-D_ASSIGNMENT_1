@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/list_books.css' %}" />
+{% endblock %}
+{% block title %}
+  Danh mục
+{% endblock %}
+
+{% block content %}
+  <section class="book-section">
+    <div class="container">
+      <h2>Danh sách sách</h2>
+
+      <table class="book-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Giá</th>
+            <th>Tồn kho</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for book in books %}
+            <tr>
+              <td>{{ book.id }}</td>
+              <td>{{ book.title }}</td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.price }} đ</td>
+              <td>{{ book.stock }}</td>
+              <td>
+                <form method="post" action="{% url 'cart_add' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="book_id" value="{{ book.id }}" />
+                  <button type="submit" class="btn-add">Thêm vào giỏ</button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="6">Không có sách nào</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endblock %}

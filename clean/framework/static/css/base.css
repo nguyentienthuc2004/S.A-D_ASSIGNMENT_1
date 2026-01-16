@@ -1,0 +1,70 @@
+/* RESET CƠ BẢN */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* CONTAINER DÙNG CHUNG */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* HEADER */
+header {
+    background-color: #222;
+    color: #fff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.logo h1 a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 16px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* MAIN CONTENT */
+main {
+    min-height: 70vh;
+    padding: 24px 0;
+}
+
+/* FOOTER */
+footer {
+    background-color: #222;
+    color: #ccc;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
+/* LINK CHUNG */
+a {
+    color: inherit;
+}
