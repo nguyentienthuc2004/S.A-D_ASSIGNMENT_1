@@ -1,21 +1,28 @@
 from domain.repositories.customers.customer_repository import CustomerRepository
 from infrastructure.customer.models import CustomerModel
-
+from domain.entities.customer import Customer
 class CustomerRepositoryImpl(CustomerRepository):
-    def authen(self, email, password):
-      customer = CustomerModel.objects.get(
-        email=email,password=password
-      )
-      return customer
-    def exists_by_email(self, email):
-      return CustomerModel.objects.filter(email=email).exists()
+    def find_by_email(self, email):
+      try:
+        obj = CustomerModel.objects.get(email=email)
+        return Customer(
+            id=obj.id,
+            name=obj.name,
+            email=obj.email,
+            password=obj.password
+        )
+      except CustomerModel.DoesNotExist:
+        return None
     def save(self, customer):
       obj = CustomerModel.objects.create(
-        name=customer.name,
-        email=customer.email,
-        password=customer.password
+            name=customer.name,
+            email=customer.email,
+            password=customer.password
+        )
+      return Customer(
+          id=obj.id,
+          name=obj.name,
+          email=obj.email,
+          password=obj.password
       )
-      obj.save()
-      customer.id = obj.id
-      return customer
   

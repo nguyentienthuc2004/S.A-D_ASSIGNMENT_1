@@ -19,8 +19,8 @@ def view_cart(request):
   if not customer_id:
       return redirect('/customer/login/')
   controller = CartController()
-  cart_items = controller.get_list_cartitems(customer_id)
-
+  cart = controller.get_cart(customer_id)
+  items = cart.items
   return render(request, 'carts/view_cart.html', {
-      'cart_items': cart_items
+      'cart_items': items
   })

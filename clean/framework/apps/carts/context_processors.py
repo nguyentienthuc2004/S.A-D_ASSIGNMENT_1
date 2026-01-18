@@ -4,7 +4,8 @@ def cart_item_count(request):
     count=0
     if customer_id:
         controller = CartController()
-        count = controller.get_list_cartitems(customer_id).__len__()
+        cart = controller.get_cart(customer_id)
+        count = len(cart.items)
     return {
         'cart_item_count': count
     }

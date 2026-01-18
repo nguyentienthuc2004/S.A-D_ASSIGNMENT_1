@@ -3,9 +3,9 @@ from abc import ABC, abstractmethod
 class CartRepository(ABC):
   
   @abstractmethod
-  def get_list_cartitems(self, customer_id):
+  def get_cart(self, customer_id):
     pass
   @abstractmethod
-  def add_cartitem(self, customer_id,book_id, quantity):
+  def save_cart(self, cart):
     pass
   

@@ -2,27 +2,35 @@ from domain.repositories.carts.cart_repository import CartRepository
 from infrastructure.carts.models import CartItemModel, CartModel
 from datetime import date
 from django.shortcuts import render
+from domain.entities.cart import Cart
+from domain.entities.cartitem import CartItem
+from infrastructure.books.models import BookModel
 
 class CartRepositoryImpl(CartRepository):
-  def get_list_cartitems(self,customer_id):
-    cart, created = CartModel.objects.get_or_create(
-        customer_id=customer_id,
-        defaults={'created_at': date.today()}
-    )
-
+  def get_cart(self,customer_id):
+    cart, created = CartModel.objects.get_or_create(customer_id=customer_id)
     cart_items = CartItemModel.objects.filter(cart=cart)
-    return cart_items
-  def add_cartitem(self, customer_id, book_id, quantity):
-    cart, created = CartModel.objects.get_or_create(
-        customer_id=customer_id,
-        defaults={'created_at': date.today()}
+    return Cart(
+        id=cart.id,
+        customer=cart.customer,
+        items=[
+            CartItem(
+                book=item.book,
+                quantity=item.quantity
+            )
+            for item in cart_items
+        ]
     )
-    cart_item, created = CartItemModel.objects.get_or_create(
-        cart=cart,
-        book_id=book_id,
-        defaults={'quantity': quantity}
-    )
-    if not created:
-        cart_item.quantity += quantity
-        cart_item.save()
-    return cart_item
+  def save_cart(self, cart):
+    cart_model = CartModel.objects.get(id=cart.id)
+    for item in cart.items:
+        book = BookModel.objects.get(id=item.book.id)
+        cart_item_model, created = CartItemModel.objects.get_or_create(
+            cart=cart_model,
+            book=book,
+            defaults={'quantity': item.quantity}
+        )
+        if not created:
+            cart_item_model.quantity =item.quantity
+            cart_item_model.save()
+        
